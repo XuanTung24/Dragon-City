@@ -1,0 +1,16 @@
+import random
+
+items = ["Dragon", "Enemy", "Treasure", "Enemy", "Power-up"]
+
+print("--- City Items ---")
+for item in items:
+    print(item)
+
+enemy_count = items.count("Enemy")
+treasure_count = items.count("Treasure")
+
+print(f"\nEnemies counted: {enemy_count}")
+print(f"Treasure counted: {treasure_count}")
+
+random_choice = random.choice(items)
+print(f"Randomly chosen item: {random_choice}")

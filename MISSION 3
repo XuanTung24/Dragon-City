@@ -54,7 +54,7 @@ def game_loop():
                 handle_tile(target_tile)
 
                 player_pos = [nr, nc]
-city_map[nr][nc] = "D"
+                city_map[nr][nc] = "D"
             else:
                 print("Boundary hit!")
 

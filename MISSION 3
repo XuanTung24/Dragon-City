@@ -1,0 +1,66 @@
+import sys
+
+city_map = [
+    ["D", ".", ".", "E", "T"],
+    [".", "E", ".", ".", "."],
+    [".", ".", "P", ".", "."],
+    [".", "E", ".", ".", "."],
+    [".", ".", ".", ".", "S"],
+]
+
+health = 100
+score = 0
+player_pos = [0, 0]
+
+def display_stats():
+    print(f"\n[ Health: {health} | Score: {score} ]")
+
+
+def check_win(tile):
+    if tile == "S":
+        print("\nVICTORY! You reached the Safe Zone!")
+        sys.exit()
+
+
+def handle_tile(tile):
+    global health, score
+    if tile == "E":
+        health -= 20
+        print("Encountered an Enemy! -20 Health!")
+    elif tile == "T":
+        score += 100
+        print("Collected Treasure! +100 Points!")
+    elif tile == "P":
+        health += 20
+        print("Picked up Power-up! +20 Health!")
+
+
+def game_loop():
+    global health, player_pos
+    while health > 0:
+        display_stats()
+        move = input("Enter direction (W/A/S/D): ").upper()
+        moves = {"W": (-1, 0), "S": (1, 0), "A": (0, -1), "D": (0, 1)}
+
+        if move in moves:
+            dr, dc = moves[move]
+            nr, nc = player_pos[0] + dr, player_pos[1] + dc
+
+            if 0 <= nr < 5 and 0 <= nc < 5:
+                city_map[player_pos[0]][player_pos[1]] = "."
+                target_tile = city_map[nr][nc]
+
+                check_win(target_tile)
+                handle_tile(target_tile)
+
+                player_pos = [nr, nc]
+city_map[nr][nc] = "D"
+            else:
+                print("Boundary hit!")
+
+    print("\nGAME OVER! Your Dragon was defeated.")
+
+
+if __name__ == "__main__":
+    game_loop()
+

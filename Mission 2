@@ -1,0 +1,55 @@
+city_map = [
+    ["D", ".", ".", "E", "T"],
+    [".", "E", ".", ".", "."],
+    [".", ".", "P", ".", "."],
+    [".", "E", ".", ".", "."],
+    [".", ".", ".", ".", "S"],
+]
+
+
+def display_city(grid):
+    print("\n--- DRAGON CITY MAP ---")
+    for row in grid:
+        print(" ".join(row))
+
+
+def find_dragon(grid):
+    for r in range(len(grid)):
+        for c in range(len(grid[r])):
+            if grid[r][c] == "D":
+                return r, c
+    return None, None
+
+
+def count_enemies(grid):
+    count = 0
+    for row in grid:
+        count += row.count("E")
+    return count
+
+
+def move_dragon(grid, direction):
+    r, c = find_dragon(grid)
+    moves = {"W": (-1, 0), "S": (1, 0), "A": (0, -1), "D": (0, 1)}
+
+    if direction not in moves:
+        print("Invalid key! Use W, A, S, or D.")
+        return
+
+    dr, dc = moves[direction]
+    new_r, new_c = r + dr, c + dc
+
+    if 0 <= new_r < len(grid) and 0 <= new_c < len(grid[0]):
+        grid[r][c] = "."
+        grid[new_r][new_c] = "D"
+    else:
+        print("Move blocked! You reached the city boundary.")
+
+
+if __name__ == "__main__":
+    display_city(city_map)
+    print(f"Enemies in city: {count_enemies(city_map)}")
+    move_input = input("Move Dragon (W/A/S/D): ").upper()
+    move_dragon(city_map, move_input)
+    display_city(city_map)
+
